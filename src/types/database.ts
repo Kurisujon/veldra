@@ -256,6 +256,154 @@ export interface Database {
           }
         ];
       };
+      document_extractions: {
+        Row: {
+          id: string;
+          case_id: string;
+          document_id: string;
+          document_type: string;
+          status: Database['public']['Enums']['extraction_status'];
+          raw_text: string | null;
+          extraction_method: string | null;
+          confidence_score: number | null;
+          review_status: Database['public']['Enums']['extraction_review_status'];
+          reviewed_at: string | null;
+          reviewed_by: string | null;
+          notes: string | null;
+          error_message: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          case_id: string;
+          document_id: string;
+          document_type: string;
+          status?: Database['public']['Enums']['extraction_status'];
+          raw_text?: string | null;
+          extraction_method?: string | null;
+          confidence_score?: number | null;
+          review_status?: Database['public']['Enums']['extraction_review_status'];
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          notes?: string | null;
+          error_message?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          case_id?: string;
+          document_id?: string;
+          document_type?: string;
+          status?: Database['public']['Enums']['extraction_status'];
+          raw_text?: string | null;
+          extraction_method?: string | null;
+          confidence_score?: number | null;
+          review_status?: Database['public']['Enums']['extraction_review_status'];
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          notes?: string | null;
+          error_message?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "document_extractions_case_id_fkey";
+            columns: ["case_id"];
+            isOneToOne: false;
+            referencedRelation: "cases";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "document_extractions_document_id_fkey";
+            columns: ["document_id"];
+            isOneToOne: false;
+            referencedRelation: "documents";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      document_fields: {
+        Row: {
+          id: string;
+          case_id: string;
+          document_id: string;
+          document_extraction_id: string;
+          field_name: string;
+          raw_value: string | null;
+          normalized_value: string | null;
+          reviewed_value: string | null;
+          final_value: string | null;
+          status: Database['public']['Enums']['field_status'];
+          confidence_score: number | null;
+          review_notes: string | null;
+          reviewed_at: string | null;
+          reviewed_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          case_id: string;
+          document_id: string;
+          document_extraction_id: string;
+          field_name: string;
+          raw_value?: string | null;
+          normalized_value?: string | null;
+          reviewed_value?: string | null;
+          final_value?: string | null;
+          status?: Database['public']['Enums']['field_status'];
+          confidence_score?: number | null;
+          review_notes?: string | null;
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          case_id?: string;
+          document_id?: string;
+          document_extraction_id?: string;
+          field_name?: string;
+          raw_value?: string | null;
+          normalized_value?: string | null;
+          reviewed_value?: string | null;
+          final_value?: string | null;
+          status?: Database['public']['Enums']['field_status'];
+          confidence_score?: number | null;
+          review_notes?: string | null;
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "document_fields_case_id_fkey";
+            columns: ["case_id"];
+            isOneToOne: false;
+            referencedRelation: "cases";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "document_fields_document_id_fkey";
+            columns: ["document_id"];
+            isOneToOne: false;
+            referencedRelation: "documents";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "document_fields_document_extraction_id_fkey";
+            columns: ["document_extraction_id"];
+            isOneToOne: false;
+            referencedRelation: "document_extractions";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       export_packages: {
         Row: {
           id: string;
@@ -383,6 +531,9 @@ export interface Database {
       };
     };
     Enums: {
+      extraction_status: 'Pending' | 'Processing' | 'Extracted' | 'NeedsReview' | 'Reviewed' | 'Failed';
+      extraction_review_status: 'Unreviewed' | 'PartiallyReviewed' | 'Reviewed' | 'Rejected';
+      field_status: 'Extracted' | 'NeedsReview' | 'Accepted' | 'Corrected' | 'Rejected';
       case_status: 'Draft' | 'Uploaded' | 'Processing' | 'NeedsReview' | 'Reviewed' | 'ReadyForExport' | 'Exported' | 'Archived' | 'DraftGenerated';
       finding_severity: 'High' | 'Medium' | 'Low';
       finding_category: 'Name Mismatch' | 'Address Mismatch' | 'Date Mismatch' | 'Age Calculation Issue' | 'School Gap' | 'Missing Information';
