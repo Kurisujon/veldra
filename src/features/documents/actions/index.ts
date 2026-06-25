@@ -142,3 +142,18 @@ export async function getSignedUrlsForDocuments(filePaths: string[]) {
   return urlMap
 }
 
+export async function getDocumentById(documentId: string) {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('documents')
+    .select('*')
+    .eq('id', documentId)
+    .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
+}
+

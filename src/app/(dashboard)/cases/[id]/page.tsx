@@ -140,7 +140,7 @@ export default async function CaseDetailsPage({ params }: { params: { id: string
       ) : (
         !isDraftPhase && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-xl">
-            <DocumentUpload caseId={caseData.id} />
+            <DocumentUpload caseId={caseData.id} documents={documents} />
             <DocumentList documents={documents} caseId={caseData.id} />
           </div>
         )

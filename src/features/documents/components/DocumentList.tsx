@@ -59,13 +59,21 @@ export function DocumentList({ documents, caseId }: { documents: DocumentRow[], 
                 <span>Uploaded {new Date(doc.created_at).toLocaleDateString()}</span>
               </div>
             </div>
-            <Button 
-              variant="secondary" 
-              onClick={() => handleDelete(doc.id)}
-              disabled={isPending}
-            >
-              Delete
-            </Button>
+            <div className="flex items-center gap-sm">
+              <Button 
+                variant="primary" 
+                onClick={() => window.location.href = `/cases/${caseId}/documents/${doc.id}`}
+              >
+                Review Data
+              </Button>
+              <Button 
+                variant="secondary" 
+                onClick={() => handleDelete(doc.id)}
+                disabled={isPending}
+              >
+                Delete
+              </Button>
+            </div>
           </div>
         ))}
       </div>
